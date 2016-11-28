@@ -1,4 +1,4 @@
-from math import ceil
+from math import ceil, sqrt, loog10
 li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
       174.3, 169.2, 168.3, 169.5, 177.6, 178.3, 170.4, 178.8, 170.3, 175.8,
       177.1, 178.4, 174.1, 170.0, 177.4, 169.8, 175.7, 168.5, 175.3, 179.8,
@@ -32,9 +32,8 @@ def masuk(path=''):
 
 
 def reset():
-    global li
-    global oli
-    oli, li = li, oli
+    global li, oli
+    oli, li = [], oli
 
 
 def cetak():
