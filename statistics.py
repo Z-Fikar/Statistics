@@ -1,4 +1,9 @@
+import plotly
+plotly.offline.init_notebook_mode()
+import plotly.graph_objs as go
+
 from math import ceil, sqrt, log10, floor
+
 li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
       174.3, 169.2, 168.3, 169.5, 177.6, 178.3, 170.4, 178.8, 170.3, 175.8,
       177.1, 178.4, 174.1, 170.0, 177.4, 169.8, 175.7, 168.5, 175.3, 179.8,
@@ -252,3 +257,22 @@ def menu_upb():
     print('Simpangan Rata-rata : %6.3f' % (SR()))
     print('Ragam               : %6.3f' % (ragam()))
     print('Simpangan Baku      : %6.3f' % (SB()))
+
+
+def diagram():
+    datax = []
+    datay = []
+    for kelas in range(int(jkelas())):
+        bb = int(min(li)) + lkelas()*kelas
+        ba = bb + lkelas()-1 + manual
+        datax.append(titikTengah(bb, ba))
+        datay.append(frekuensi(bb, ba))
+    if li == oli:
+        datax = [str(z)+' cm' for z in datax]
+    plotly.offline.iplot({
+        "data": [go.Bar(
+            x=datax,
+            y=datay
+            )],
+        "layout": go.Layout(title="Average Male Height")
+    })
