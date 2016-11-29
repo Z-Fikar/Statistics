@@ -10,13 +10,12 @@ li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
       173.4, 169.0, 162.1
       ]
 manual = 0
-oli = []
+oli = li
 
 
 def masuk(path=''):
     global li, oli, manual
     manual = 0
-    oli = li
     if path == '':
         n = eval(input('Masukkan jumlah data: '))
         li = []
@@ -33,14 +32,14 @@ def masuk(path=''):
 
 def reset():
     global li, oli
-    oli, li = [], oli
+    li = oli
 
 
 def cetak():
     i = 0
-    for x in sorted(li):
+    for x in li:
         i += 1
-        print('%5d' % x, end=" ")
+        print('%5.2f' % x, end=" ")
         if i % 10 == 0:
             print()
 
@@ -114,7 +113,6 @@ def median():
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
         if fk+f > mid:
-            print((bb - 0.5 + manual/2), mid, fk, f)
             return (bb - 0.5 + manual/2) + (mid-fk)*lkelas()/f
         fk += f
 
