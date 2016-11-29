@@ -1,4 +1,4 @@
-from math import ceil, sqrt, log10
+from math import ceil, sqrt, log10, floor
 li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
       174.3, 169.2, 168.3, 169.5, 177.6, 178.3, 170.4, 178.8, 170.3, 175.8,
       177.1, 178.4, 174.1, 170.0, 177.4, 169.8, 175.7, 168.5, 175.3, 179.8,
@@ -38,9 +38,9 @@ def reset():
 
 def cetak():
     i = 0
-    for x in li:
+    for x in sorted(li):
         i += 1
-        print(x, end=" ")
+        print('%5d' % x, end=" ")
         if i % 10 == 0:
             print()
 
@@ -114,6 +114,7 @@ def median():
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
         if fk+f > mid:
+            print((bb - 0.5 + manual/2), mid, fk, f)
             return (bb - 0.5 + manual/2) + (mid-fk)*lkelas()/f
         fk += f
 
@@ -128,7 +129,7 @@ def modus():
         tb.append(bb - 0.5 + manual/2)
     for i in range(len(f)):
         if max(f) == f[i]:
-            return tb[i] + (f[i] - f[i-1]) / ((f[i] - f[i-1]) + (f[i] - f[i+1]))
+            return tb[i] + (f[i] - f[i-1])*lkelas() / ((f[i] - f[i-1]) + (f[i] - f[i+1]))
 
 
 def gmean():
@@ -205,20 +206,22 @@ def rangeq():
 
 
 def SR():
+    result=0
     for kelas in range(int(jkelas())):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
-        result = abs(titikTengah(bb, ba)-mean()) * f
+        result += abs(titikTengah(bb, ba)-mean()) * f
     return result / len(li)
 
 
 def ragam():
+    result = 0
     for kelas in range(int(jkelas())):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
-        result = (titikTengah(bb, ba)-mean()) ** 2 * f
+        result += (titikTengah(bb, ba)-mean()) ** 2 * f
     return result/len(li)
 
 
