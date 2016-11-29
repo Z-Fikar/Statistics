@@ -16,7 +16,7 @@ li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
       ]
 manual = 0
 oli = li
-
+bulat = 'atas'
 
 def masuk(path=''):
     global li, oli, manual
@@ -36,8 +36,10 @@ def masuk(path=''):
 
 
 def reset():
-    global li, oli
+    global li, oli, manual, bulat
     li = oli
+    manual = 0
+    bulat = 'atas'
 
 
 def cetak():
@@ -49,12 +51,20 @@ def cetak():
             print()
 
 
-def jkelas():
-    return ceil(1 + 3.3*log10(len(li)))
+def jkelas(bulat = ''):
+    jumlah = 1 + 3.3*log10(len(li))
+    if bulat == 'atas':
+        return ceil(jumlah)
+    elif bulat == 'bawah':
+        return floor(jumlah)
+    else:
+        bulat = input('%f \nPembulatan ke atas atau ke bawah? [atas/bawah] ' % jumlah)
+        jkelas(bulat)
+
 
 
 def lkelas():
-    return ceil((max(li)-min(li)) / jkelas())
+    return ceil((max(li)-min(li)) / jkelas(bulat))
 
 
 def frekuensi(bb, ba):
@@ -66,7 +76,7 @@ def frekuensi(bb, ba):
 
 
 def tabel():
-    global manual
+    global manual, bulat
     fk1 = 0
     fk2 = len(li)
     frk1 = 0
@@ -75,7 +85,7 @@ def tabel():
         % ('No', 'Kelas    ', 'Titik Tengah', 'Frekuensi', 'F. Relatif', 'F. Kumulatif', 'F. RK      ')
     line = '+'+'-'*(len(head)-2)+'+'
     print (line + '\n' + head + '\n' + line)
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
@@ -91,14 +101,18 @@ def tabel():
           % (' ', ' ', ' ', ' ', fk1, frk1, fk1, fk2, frk1, frk2))
     print(line)
     if fk1 != len(li):
-        manual = eval(input("[ Menampilkan %d / %d ]. Dibutuhkan koreksi manual: " % (fk1, len(li))))
+        masuk = input("[ Menampilkan %d / %d ]. Dibutuhkan koreksi manual: " % (fk1, len(li)))
+        if 'jumlah kelas' in masuk.lower():
+            bulat = 'bawah' if 'bawah' in masuk.lower() else 'atas'
+        else:
+            manual = eval(masuk)
         print()
         tabel()
 
 
 def mean():
     ttf = []
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
@@ -113,7 +127,7 @@ def titikTengah(bb, ba):
 def median():
     fk = 0
     mid = len(li) / 2
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
@@ -125,7 +139,7 @@ def median():
 def modus():
     f = []
     tb = []
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f.append(frekuensi(bb, ba))
@@ -137,7 +151,7 @@ def modus():
 
 def gmean():
     result = 1
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         result *= titikTengah(bb, ba) * frekuensi(bb, ba)
@@ -148,7 +162,7 @@ def quartil(n):
     if n > 0 and n < 4:
         q = len(li) * n / 4
         fk = 0
-        for kelas in range(int(jkelas())):
+        for kelas in range(int(jkelas(bulat))):
             bb = int(min(li)) + lkelas()*kelas
             ba = bb + lkelas()-1 + manual
             f = frekuensi(bb, ba)
@@ -163,7 +177,7 @@ def quantil(n):
     if n > 0 and n < 5:
         q = len(li) * n / 5
         fk = 0
-        for kelas in range(int(jkelas())):
+        for kelas in range(int(jkelas(bulat))):
             bb = int(min(li)) + lkelas()*kelas
             ba = bb + lkelas()-1 + manual
             f = frekuensi(bb, ba)
@@ -178,7 +192,7 @@ def tetril(n):
     if n > 0 and n < 10:
         t = len(li) * n / 10
         fk = 0
-        for kelas in range(int(jkelas())):
+        for kelas in range(int(jkelas(bulat))):
             bb = int(min(li)) + lkelas()*kelas
             ba = bb + lkelas()-1 + manual
             f = frekuensi(bb, ba)
@@ -193,7 +207,7 @@ def persentil(n):
     if n > 0 and n < 100:
         p = len(li) * n / 100
         fk = 0
-        for kelas in range(int(jkelas())+1):
+        for kelas in range(int(jkelas(bulat))+1):
             bb = int(min(li)) + lkelas()*kelas
             ba = bb + lkelas()-1 + manual
             f = frekuensi(bb, ba)
@@ -210,7 +224,7 @@ def rangeq():
 
 def SR():
     result=0
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
@@ -220,7 +234,7 @@ def SR():
 
 def ragam():
     result = 0
-    for kelas in range(int(jkelas())):
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
@@ -238,7 +252,7 @@ def menu_df():
     print('Maximum      : %5.1f' % max(li))
     print('Minimum      : %5.1f' % min(li))
     print('Jangkauan    : %5.1f' % (max(li)-min(li)))
-    print('Jumlah Kelas : %5d' % jkelas())
+    print('Jumlah Kelas : %5d' % jkelas(bulat))
     print('Lebar Kelas  : %5d' % lkelas())
 
 
@@ -262,17 +276,22 @@ def menu_upb():
 def diagram():
     datax = []
     datay = []
-    for kelas in range(int(jkelas())):
+    judul = ''
+    for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         datax.append(titikTengah(bb, ba))
         datay.append(frekuensi(bb, ba))
     if li == oli:
         datax = [str(z)+' cm' for z in datax]
+        judul = 'Average Male Height'
     plotly.offline.iplot({
         "data": [go.Bar(
             x=datax,
             y=datay
             )],
-        "layout": go.Layout(title="Average Male Height")
-    })
+        "layout": go.Layout(title=judul,
+                            xaxis=dict(title='Titik Tengah'),
+                            yaxis=dict(title='Frekuensi')
+                            )
+        })
