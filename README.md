@@ -18,16 +18,7 @@ li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
       ]
 ```
 
-If you want to input a new set of data use this function.
-###masuk([*Path*])
-As [*Path*] is the address that refers to a File that consist the new data. By default, you still can enter the data one by one manually.
-The data in the File must be separated by a new line as the program can only read them per line. <br> e. g. [contoh_Data.txt](https://github.com/Z-Fikar/Statistics/blob/master/contoh_data.txt):
-```
-170.2
-171.3
-176.3
-177.0
-...
-169.0
-162.1
-```
+## Requirements
+This program need these tools to running on your device.
+- [Python 3.x](https://www.python.org/downloads/)
+- [Plotly](https://plot.ly)
