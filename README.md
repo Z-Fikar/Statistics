@@ -1,4 +1,5 @@
-# Statistics
+# Statistics [![Binder](http://mybinder.org/badge.svg)](http://mybinder.org:/repo/z-fikar/statistics)
+
 a ~~simple~~ program is used to compute the distribution of the data.
 
 This program is devoted to fulfil my college assignment, Statistics.
