@@ -113,7 +113,7 @@ def median():
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
         f = frekuensi(bb, ba)
-        if fk > mid:
+        if fk+f > mid:
             return (bb - 0.5 + manual/2) + (mid-fk)*lkelas()/f
         fk += f
 
