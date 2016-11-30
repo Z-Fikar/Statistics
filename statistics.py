@@ -1,5 +1,4 @@
 import plotly
-plotly.offline.init_notebook_mode()
 import plotly.graph_objs as go
 
 from math import ceil, sqrt, log10, floor
@@ -121,7 +120,7 @@ def mean():
 
 
 def titikTengah(bb, ba):
-    return (ba+bb) / 2
+    return (ba+bb+manual) / 2
 
 
 def median():
@@ -273,7 +272,7 @@ def menu_upb():
     print('Simpangan Baku      : %6.3f' % (SB()))
 
 
-def diagram():
+def diagram(mode = ''):
     datax = []
     datay = []
     judul = ''
@@ -283,15 +282,18 @@ def diagram():
         datax.append(titikTengah(bb, ba))
         datay.append(frekuensi(bb, ba))
     if li == oli:
-        datax = [str(z)+' cm' for z in datax]
+        datax = ['%.2f cm' % z for z in datax]
         judul = 'Average Male Height'
-    plotly.offline.iplot({
-        "data": [go.Bar(
-            x=datax,
-            y=datay
-            )],
-        "layout": go.Layout(title=judul,
-                            xaxis=dict(title='Titik Tengah'),
-                            yaxis=dict(title='Frekuensi')
-                            )
-        })
+    dicts = {"data": [go.Scatter(x=datax,
+                                 y=datay
+                                 )],
+             "layout": go.Layout(title=judul,
+                                 xaxis=dict(title='Titik Tengah'),
+                                 yaxis=dict(title='Frekuensi')
+                                 )
+             }
+    if mode == 'notebook':
+        plotly.offline.init_notebook_mode()
+        plotly.offline.iplot(dicts)
+    else:
+        plotly.offline.plot(dicts)
