@@ -120,7 +120,7 @@ def mean():
 
 
 def titikTengah(bb, ba):
-    return (ba+bb+manual) / 2
+    return (ba+bb) / 2
 
 
 def median():
@@ -153,7 +153,7 @@ def gmean():
     for kelas in range(int(jkelas(bulat))):
         bb = int(min(li)) + lkelas()*kelas
         ba = bb + lkelas()-1 + manual
-        result *= titikTengah(bb, ba) * frekuensi(bb, ba)
+        result *= titikTengah(bb, ba) ** frekuensi(bb, ba)
     return result ** (1/len(li))
 
 
