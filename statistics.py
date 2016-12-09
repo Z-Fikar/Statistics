@@ -48,7 +48,7 @@ def cetak():
         print('%5.2f' % x, end=" ")
         if i % 10 == 0:
             print()
-
+    print()
 
 def jkelas(bulat = ''):
     jumlah = 1 + 3.3*log10(len(li))
@@ -286,7 +286,11 @@ def diagram(mode = ''):
         judul = 'Average Male Height'
     dicts = {"data": [go.Scatter(x=datax,
                                  y=datay
-                                 )],
+                                 ),
+                      go.Bar(x=datax,
+                             y=datay
+                             )
+                      ],
              "layout": go.Layout(title=judul,
                                  xaxis=dict(title='Titik Tengah'),
                                  yaxis=dict(title='Frekuensi')

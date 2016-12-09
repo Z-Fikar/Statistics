@@ -22,3 +22,14 @@ li = [170.2, 171.3, 176.3, 177.0, 172.0, 165.6, 176.6, 169.5, 160.3, 170.0,
 This program need these tools to running on your device.
 - [Python 3.x](https://www.python.org/downloads/)
 - [Plotly](https://plot.ly)
+
+## How to Use
+- Open your command line
+- Change to `statistics.py` 's directory
+- On your command line, enter these code
+```
+python
+from statistics import*
+```
+- You are ready to use it
+- **Launch Binder** to see every function the 1program have
