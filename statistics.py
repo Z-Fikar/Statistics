@@ -1,3 +1,5 @@
+import time as t
+now = t.time()
 import plotly
 import plotly.graph_objs as go
 
@@ -43,6 +45,7 @@ def reset():
 
 def cetak():
     i = 0
+    print('Data:')
     for x in li:
         i += 1
         print('%5.2f' % x, end=" ")
@@ -76,6 +79,7 @@ def frekuensi(bb, ba):
 
 def tabel():
     global manual, bulat
+    koma = 0
     fk1 = 0
     fk2 = len(li)
     frk1 = 0
@@ -99,13 +103,16 @@ def tabel():
     print('| %2s   %5s   %5s   %12s | %9d | %9.1f %% | %5d | %5d | %5.1f %% | %5.1f %% |'
           % (' ', ' ', ' ', ' ', fk1, frk1, fk1, fk2, frk1, frk2))
     print(line)
+    print('Menampilkan [%d / %d] data.' % (fk1, len(li)))
     if fk1 != len(li):
-        masuk = input("[ Menampilkan %d / %d ]. Dibutuhkan koreksi manual: " % (fk1, len(li)))
-        if 'jumlah kelas' in masuk.lower():
-            bulat = 'bawah' if 'bawah' in masuk.lower() else 'atas'
-        else:
-            manual = eval(masuk)
-        print()
+        print('Koreksi batas atas..')
+        for x in li:
+            if koma < x%1:
+                koma = x%1
+        manual = koma
+        if manual == 0:
+            print('Koreksi jumlah kelas..')
+            bulat = 'bawah'
         tabel()
 
 
@@ -300,4 +307,60 @@ def diagram(mode = ''):
         plotly.offline.init_notebook_mode()
         plotly.offline.iplot(dicts)
     else:
+        print('Membuka dengan peramban bawaan.')
         plotly.offline.plot(dicts)
+
+
+def main():
+    global mode
+    print('\nMenu Statistika:')
+    print(' 0. Exit')
+    print(' 1. Cetak Data')
+    print(' 2. Ganti Data')
+    print(' 3. Distribusi Frekuensi')
+    print(' 4. Ukuran Pusat')
+    print(' 5. Ukuran Penyebaran')
+    print(' 6. Quartil')
+    print(' 7. Quantil')
+    print(' 8. Tetril')
+    print(' 9. Persentil')
+    print('10. Diagram')
+    opsi = eval(input('>>> '))
+    if opsi == 0:
+        exit()
+    elif opsi == 1:
+        cetak()
+    elif opsi == 2:
+        ganti = ''
+        while ganti != 'file' and ganti != 'manual' and ganti != 'reset':
+            ganti = input('Dengan [file/manual/reset]: ')
+        if ganti == 'file':
+            masuk(input('Masukkan alamat dan/atau nama File: '))
+        elif ganti == 'manual':
+            masuk()
+        elif ganti == 'reset':
+            reset()
+        else:
+            print('Input salah!')
+        cetak()
+    elif opsi == 3:
+        menu_df()
+        tabel()
+    elif opsi == 4:
+        menu_upt()
+    elif opsi == 5:
+        menu_upb()
+    elif opsi == 6:
+        print('=', quartil(eval(input('Quartil ke - '))))
+    elif opsi == 7:
+        print('=', quantil(eval(input('Quantil ke - '))))
+    elif opsi == 8:
+        print('=', tetril(eval(input('Tetril ke - '))))
+    elif opsi == 9:
+        print(persentil(eval(input('Persentil ke - '))))
+    elif opsi == 10:
+        diagram(mode)
+    main()
+
+
+print('Waktu inisialisasi: %.2f detik' % (t.time()-now))
